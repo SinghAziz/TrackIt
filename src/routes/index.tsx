@@ -1,30 +1,17 @@
+import { pageHead, faqs } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Github, Target, CalendarDays, BrainCircuit, ArrowUpRight } from "lucide-react";
+import {
+  ArrowRight,
+  Github,
+  Target,
+  CalendarDays,
+  BrainCircuit,
+  ArrowUpRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import studyDesk from "@/assets/study-desk.jpg";
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "TrackIt — Intelligent Assignment Planner" },
-      {
-        name: "description",
-        content:
-          "Organize assignments, prioritize deadlines, and plan study sessions in one focused workspace.",
-      },
-      { property: "og:title", content: "TrackIt — Intelligent Assignment Planner" },
-      {
-        property: "og:description",
-        content:
-          "Organize assignments, prioritize deadlines, and plan study sessions in one focused workspace.",
-      },
-      { property: "og:url", content: "https://trackit.harazizsingh.com/" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:title", content: "TrackIt — Intelligent Assignment Planner" },
-      { name: "twitter:description", content: "Organize assignments, prioritize deadlines, and plan study sessions in one focused workspace." },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "https://trackit.harazizsingh.com/" }],
-  }),
+  head: () => pageHead({ home: true }),
   component: Home,
 });
 function Home() {
@@ -45,10 +32,13 @@ function Home() {
             <br />
             More progress.
           </h1>
-          <p className="hero-tagline">Manage assignments, prioritize deadlines, and build a clearer study plan.</p>
+          <p className="hero-tagline">
+            Manage assignments, prioritize deadlines, and build a clearer study
+            plan.
+          </p>
           <p className="hero-description">
-            An academic productivity workspace for students, with your tasks, deadlines, and
-            study priorities in one place.
+            TrackIt is an academic productivity workspace for students, with
+            your tasks, deadlines, and study priorities in one place.
           </p>
           <div className="flex flex-wrap gap-3">
             <Button asChild size="lg">
@@ -76,26 +66,26 @@ function Home() {
       <section className="feature-grid">
         <div>
           <Target className="size-6 text-primary" />
-          <h3>The right task, at the right time.</h3>
+          <h2>The right task, at the right time.</h2>
           <p>
-            Prioritization weighs deadlines, priority, and effort so your most important
-            next step is always clear.
+            Prioritization weighs deadlines, priority, and effort so your most
+            important next step is always clear.
           </p>
         </div>
         <div>
           <CalendarDays className="size-6 text-info" />
-          <h3>A week you can see coming.</h3>
+          <h2>A week you can see coming.</h2>
           <p>
-            Keep deadlines together, track what’s complete, and understand your weekly workload
-            before it becomes overwhelming.
+            Keep deadlines together, track what’s complete, and understand your
+            weekly workload before it becomes overwhelming.
           </p>
         </div>
         <div>
           <BrainCircuit className="size-6 text-lilac" />
-          <h3>A thoughtful study copilot.</h3>
+          <h2>A thoughtful study copilot.</h2>
           <p>
-            Turn your assignments into practical study plans with a rule-based Study Copilot
-            that helps you decide where to start.
+            Turn your assignments into practical study plans with a rule-based
+            Study Copilot that helps you decide where to start.
           </p>
         </div>
       </section>
@@ -104,7 +94,8 @@ function Home() {
           <p className="eyebrow">An EMBER portfolio project</p>
           <h2 className="text-lg mt-2">A clearer approach to academic work.</h2>
           <p className="text-xs text-muted-foreground mt-2">
-            TrackIt brings assignment planning and study priorities together, right in your browser.
+            TrackIt brings assignment planning and study priorities together,
+            right in your browser.
           </p>
         </div>
         <Button asChild variant="outline">
@@ -113,6 +104,19 @@ function Home() {
             <ArrowUpRight />
           </Link>
         </Button>
+      </section>
+      <section
+        id="faq"
+        className="about-copy border-t border-border py-8"
+        aria-labelledby="faq-heading"
+      >
+        <h2 id="faq-heading">Questions about TrackIt</h2>
+        {faqs.map(({ question, answer }) => (
+          <div key={question} className="mt-6">
+            <h3 className="text-base font-semibold">{question}</h3>
+            <p>{answer}</p>
+          </div>
+        ))}
       </section>
     </>
   );
