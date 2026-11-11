@@ -1,36 +1,38 @@
+import { pageHead } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Plus, Search, Pencil, Trash2, Check, Circle, ListTodo, RotateCcw } from "lucide-react";
+import {
+  Plus,
+  Search,
+  Pencil,
+  Trash2,
+  Check,
+  Circle,
+  ListTodo,
+  RotateCcw,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTracker } from "@/components/tracker/store";
 import { AssignmentForm } from "@/components/tracker/assignment-form";
 import { PriorityBadge, CourseIcon } from "@/components/tracker/dashboard";
 import { deadlineLabel, isOverdue, type Assignment } from "@/lib/assignments";
 export const Route = createFileRoute("/assignments")({
-  head: () => ({
-    meta: [
-      { title: "Assignments — TrackIt Intelligent Assignment Planner" },
-      {
-        name: "description",
-        content:
-          "Organize assignments, prioritize deadlines, and plan study sessions in one focused workspace.",
-      },
-      { property: "og:title", content: "Assignments — TrackIt Intelligent Assignment Planner" },
-      {
-        property: "og:description",
-        content: "Organize assignments, prioritize deadlines, and plan study sessions in one focused workspace.",
-      },
-      { property: "og:url", content: "https://trackit.harazizsingh.com/assignments" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:title", content: "Assignments — TrackIt Intelligent Assignment Planner" },
-      { name: "twitter:description", content: "Organize assignments, prioritize deadlines, and plan study sessions in one focused workspace." },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "https://trackit.harazizsingh.com/assignments" }],
-  }),
+  head: () =>
+    pageHead({
+      title: "Manage Assignments & Deadlines | TrackIt",
+      description:
+        "Add, edit, filter, and complete assignments in your browser-local workspace. Track courses, deadlines, effort, and task priorities.",
+      path: "/assignments",
+      index: false,
+    }),
   component: AssignmentsPage,
 });
 function AssignmentsPage() {
@@ -46,7 +48,9 @@ function AssignmentsPage() {
         (filter === "All" ||
           (filter === "Completed" && a.status === "Completed") ||
           (filter === "Overdue" && isOverdue(a, now)) ||
-          (filter === "Upcoming" && a.status !== "Completed" && new Date(a.deadline) >= now)) &&
+          (filter === "Upcoming" &&
+            a.status !== "Completed" &&
+            new Date(a.deadline) >= now)) &&
         `${a.title} ${a.course}`.toLowerCase().includes(search.toLowerCase()),
     )
     .sort((a, b) => Date.parse(a.deadline) - Date.parse(b.deadline));
@@ -146,11 +150,19 @@ function AssignmentsPage() {
                         size="icon-sm"
                         variant="ghost"
                         className={`shrink-0 ${a.status === "Completed" ? "text-primary" : "text-muted-foreground"}`}
-                        title={a.status === "Completed" ? "Mark incomplete" : "Mark completed"}
+                        title={
+                          a.status === "Completed"
+                            ? "Mark incomplete"
+                            : "Mark completed"
+                        }
                         aria-label={`${a.status === "Completed" ? "Reopen" : "Complete"} ${a.title}`}
                         onClick={() => toggle(a.id)}
                       >
-                        {a.status === "Completed" ? <Check /> : <Circle className="size-4" />}
+                        {a.status === "Completed" ? (
+                          <Check />
+                        ) : (
+                          <Circle className="size-4" />
+                        )}
                       </Button>
                       <span
                         className={`task-title ${a.status === "Completed" ? "line-through text-muted-foreground" : ""}`}
@@ -166,7 +178,13 @@ function AssignmentsPage() {
                     </div>
                   </td>
                   <td>
-                    <p className={isOverdue(a, now) ? "text-destructive font-semibold" : ""}>
+                    <p
+                      className={
+                        isOverdue(a, now)
+                          ? "text-destructive font-semibold"
+                          : ""
+                      }
+                    >
                       {a.status === "Completed"
                         ? new Date(a.deadline).toLocaleDateString("en-US", {
                             month: "short",
@@ -181,7 +199,9 @@ function AssignmentsPage() {
                       })}
                     </p>
                   </td>
-                  <td className="hide-mobile text-muted-foreground">{a.effort}h</td>
+                  <td className="hide-mobile text-muted-foreground">
+                    {a.effort}h
+                  </td>
                   <td className="hide-mobile">
                     <PriorityBadge priority={a.priority} />
                   </td>
@@ -253,7 +273,11 @@ function AssignmentsPage() {
         }}
       >
         <DialogContent className="max-w-[calc(100%-32px)] sm:max-w-md">
-          <DialogTitle>{resetting ? "Restore sample assignments?" : "Delete this assignment?"}</DialogTitle>
+          <DialogTitle>
+            {resetting
+              ? "Restore sample assignments?"
+              : "Delete this assignment?"}
+          </DialogTitle>
           <DialogDescription>
             {resetting
               ? "This replaces all your assignments with a fresh set of sample assignments. This cannot be undone."
